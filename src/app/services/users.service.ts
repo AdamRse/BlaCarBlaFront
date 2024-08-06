@@ -14,6 +14,6 @@ export class UsersService {
     return this.http.get('http://localhost:8000/api/users/nt');
   }
   registerUser(): Observable<any>{
-    return this.http.post("");//
+    return this.http.post("");//https://angular.dev/api/common/http/HttpClient
   }
 }
