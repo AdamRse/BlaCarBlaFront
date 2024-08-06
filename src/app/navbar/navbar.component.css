@@ -8,6 +8,15 @@ nav{
     align-items: center;
     font-weight: 200;
 }
+.home{
+    font-weight: 500;
+}
 .routes a{
     margin: 0 1rem;
+}
+nav a{
+    text-decoration: none;
+}
+nav a:visited{
+    color: inherit;
 }
