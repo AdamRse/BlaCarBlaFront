@@ -8,3 +8,6 @@ nav{
     align-items: center;
     font-weight: 200;
 }
+.routes a{
+    margin: 0 1rem;
+}

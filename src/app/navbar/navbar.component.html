@@ -1,9 +1,20 @@
-<nav>
+<!-- <nav>
     <div>
         <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
     </div>
     <div class="routes">
         <a routerLink="/users" ariaCurrentWhenActive="page">Users</a>
+        <a routerLink="/login" ariaCurrentWhenActive="page">Login</a>
+        <a routerLink="/register" ariaCurrentWhenActive="page">register</a>
+    </div>
+</nav> -->
+<nav>
+    <div>
+      <a routerLink="/" routerLinkActive="active" ariaCurrentWhenActive="page">Home</a>
+    </div>
+    <div class="routes">
+      <a *ngFor="let route of routes" [routerLink]="route.path" routerLinkActive="active" ariaCurrentWhenActive="page">
+        {{ route.title }}
+      </a>
     </div>
 </nav>
-<router-outlet></router-outlet>
