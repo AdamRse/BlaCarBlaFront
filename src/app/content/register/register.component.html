@@ -1,1 +1,31 @@
-<p>register works!</p>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="firstname">Prénom:</label>
+      <input id="firstname" formControlName="firstname">
+    </div>
+  
+    <div>
+      <label for="lastname">Nom:</label>
+      <input id="lastname" formControlName="lastname">
+    </div>
+  
+    <div>
+      <label for="email">E-mail:</label>
+      <input id="email" formControlName="email">
+    </div>
+    <div>
+      <label for="password">Mot de passe:</label>
+      <input id="password" formControlName="password">
+    </div>
+  
+    <div>
+      <label for="role_id">Type :</label>
+      <select id="role_id" formControlName="role_id">
+        <option value="2">Conducteur</option>
+        <option selected="selected" value="3">Passager</option>
+      </select>
+    </div>
+  
+    <button type="submit">S'inscrire</button>
+  </form>
+  
