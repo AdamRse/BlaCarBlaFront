@@ -37,6 +37,7 @@ export class LoginComponent implements OnInit{
 
       this.usersService.loginUser(user).subscribe(
         registeredUser => {
+          //registeredUser contient mon bearer token
           console.log('Utilisateur enregistré avec succès:', registeredUser);
         },
         error => {
