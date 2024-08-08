@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, RouterModule } from '@angular/router';
-import { Route } from '@angular/router';
+import { Router, RouterModule, Route } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { UsersService } from "../services/users.service";
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navbar',
@@ -12,10 +14,21 @@ import { CommonModule } from '@angular/common';
 })
 export class NavbarComponent implements OnInit {
   routes: Route[] = [];
+  isConnected$: Observable<boolean>;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private userService: UsersService) {
+    this.isConnected$ = this.userService.connected$;
+  }
 
   ngOnInit() {
-    this.routes = this.router.config.filter(route => route.path && route.path.length > 0);
+    this.isConnected$.pipe(
+      map(connected => 
+        this.router.config.filter(route => 
+          route.data?.['connected'] === undefined || route.data?.['connected'] === connected
+        )
+      )
+    ).subscribe(filteredRoutes => {
+      this.routes = filteredRoutes;
+    });
   }
 }

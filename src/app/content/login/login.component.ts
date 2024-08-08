@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../../services/users.service';
 import { IUser } from "../../interfaces/user";
+import { ILoginResponse } from "../../interfaces/login-response";
 
 @Component({
   selector: 'app-login',
@@ -26,7 +27,7 @@ export class LoginComponent implements OnInit{
   }
 
   onSubmit(): void {
-    console.log('Formulaire soumis, password : '+this.registerForm.value.password);
+    console.log('LoginComponent.onSubmit : Formulaire soumis, password : '+this.registerForm.value.password);
     if (this.registerForm.valid) {
       console.log('Formulaire valide');
       const user: IUser = {
@@ -37,18 +38,18 @@ export class LoginComponent implements OnInit{
 
       this.usersService.loginUser(user).subscribe(
         registeredUser => {
-          //registeredUser contient mon bearer token
-          console.log('Utilisateur enregistré avec succès:', registeredUser);
+          console.log('LoginComponent.onSubmit : Utilisateur enregistré avec succès:', registeredUser);
+          this.usersService.setToken(registeredUser.access_token);
         },
         error => {
           if(error.email && error.email[0])
             console.error(error.email[0])
-          console.error('Erreur lors de l\'enregistrement de l\'utilisateur:', error);
+          console.error('LoginComponent.onSubmit : Erreur lors de l\'enregistrement de l\'utilisateur:', error);
         }
       );
     }
     else{
-      console.log('Formulaire invalide');
+      console.log('LoginComponent.onSubmit : Formulaire invalide');
     }
   }
 }
