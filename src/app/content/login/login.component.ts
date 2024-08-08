@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router'
 import { UsersService } from '../../services/users.service';
 import { IUser } from "../../interfaces/user";
 import { ILoginResponse } from "../../interfaces/login-response";
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -14,18 +16,27 @@ import { ILoginResponse } from "../../interfaces/login-response";
 })
 export class LoginComponent implements OnInit{
   registerForm: FormGroup;
-
+  isConnected$: Observable<boolean>;
+  
   constructor(private fb: FormBuilder, private usersService: UsersService) {
     this.registerForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
+    this.isConnected$ = this.usersService.connected$;
   }
 
   ngOnInit(): void {
 
   }
 
+  onLogout(): void{
+    this.isConnected$.subscribe(isConnected => {
+      if (isConnected) {
+        this.usersService.logout(); 
+      }
+    });
+  }
   onSubmit(): void {
     console.log('LoginComponent.onSubmit : Formulaire soumis, password : '+this.registerForm.value.password);
     if (this.registerForm.valid) {

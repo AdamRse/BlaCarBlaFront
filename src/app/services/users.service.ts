@@ -16,13 +16,20 @@ export class UsersService {
   connected$ = this._connected.asObservable();
 
   constructor(private http: HttpClient) { }
+  logout(){
+    this.header = null;
+    this._connected.next(false);
+    console.log("UsersService.logout : utilisateur déconnecté")
+  }
   setToken(token:string){
     this.header = new HttpHeaders({ Authorization: "Bearer "+token });
     this._connected.next(true);
     console.log("UsersService.setToken : header utilisé : ", this.header, "status de la section :", (this._connected ? "connecté" : "déconnecté"));
   }
   getUsers(): Observable<IUser[]>{
-    console.log("UsersService.setToken : status de la section :", (this._connected ? "connecté" : "déconnecté"), this.connected$);
+    this.connected$.subscribe(isConnected => {
+      console.log("UsersService.getUsers : status de la section :", isConnected ? "connecté" : "déconnecté");
+    });
     return this.http.get<IUser[]>('http://localhost:8000/api/users/nt');
   }
   registerUser(user:IUser): Observable<IUser>{

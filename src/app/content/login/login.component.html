@@ -1,4 +1,5 @@
-<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+<div *ngIf="(isConnected$ | async) === false; else loggedInTemplate">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
     <div>
       <label for="email">E-mail:</label>
       <input id="email" formControlName="email">
@@ -10,3 +11,9 @@
   
     <button type="submit">Connexion</button>
   </form>
+</div>
+
+<ng-template #loggedInTemplate>
+  <p>Vous êtes connecté.</p>
+  <button (click)="onLogout()">Déconnexion</button>
+</ng-template>
