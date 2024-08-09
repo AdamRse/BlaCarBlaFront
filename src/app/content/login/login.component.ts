@@ -47,17 +47,17 @@ export class LoginComponent implements OnInit{
         password_confirmation: this.registerForm.value.password,
       };
 
-      this.usersService.loginUser(user).subscribe(
-        registeredUser => {
-          console.log('LoginComponent.onSubmit : Utilisateur enregistré avec succès:', registeredUser);
-          this.usersService.setToken(registeredUser.access_token);
-        },
-        error => {
-          if(error.email && error.email[0])
-            console.error(error.email[0])
-          console.error('LoginComponent.onSubmit : Erreur lors de l\'enregistrement de l\'utilisateur:', error);
-        }
-      );
+      // this.usersService.loginUser(user).subscribe(
+      //   registeredUser => {
+      //     console.log('LoginComponent.onSubmit : Utilisateur enregistré avec succès:', registeredUser);
+      //     this.usersService.setToken(registeredUser.access_token);
+      //   },
+      //   error => {
+      //     if(error.email && error.email[0])
+      //       console.error(error.email[0])
+      //     console.error('LoginComponent.onSubmit : Erreur lors de l\'enregistrement de l\'utilisateur:', error);
+      //   }
+      // );
     }
     else{
       console.log('LoginComponent.onSubmit : Formulaire invalide');
